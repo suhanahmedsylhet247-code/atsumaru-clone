@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id           String     @id @default(cuid())
+  username     String     @unique
+  email        String     @unique
+  passwordHash String
+  avatar       String?
+  bio          String?
+  reputation   Int        @default(0)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  bookmarks Bookmark[]
+  comments  Comment[]
+  votes     Vote[]
+}
+
+model Bookmark {
+  id        String   @id @default(cuid())
+  userId    String
+  mangaId   String
+  status    String   @default("reading")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, mangaId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  userId    String
+  mangaId   String
+  chapterId String?
+  content   String
+  parentId  String?
+  upvotes   Int      @default(0)
+  downvotes Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
+  votes   Vote[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  commentId String
+  value     Int
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
+}
+
+model ReadingProgress {
+  id            String   @id @default(cuid())
+  userId        String
+  mangaId       String
+  lastChapterId String
+  lastPage      Int      @default(0)
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, mangaId])
+}
