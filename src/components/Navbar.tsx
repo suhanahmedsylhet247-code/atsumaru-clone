@@ -94,6 +94,9 @@ export default function Navbar() {
                     <Link href="/bookmarks" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-hover" onClick={() => setMenuOpen(false)}>
                       Bookmarks
                     </Link>
+                    <Link href="/history" className="block px-4 py-2 text-sm text-text-secondary hover:bg-bg-hover" onClick={() => setMenuOpen(false)}>
+                      History
+                    </Link>
                     <button
                       onClick={async () => {
                         await fetch("/api/auth/logout", { method: "POST" });

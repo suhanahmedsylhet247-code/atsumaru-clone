@@ -2,6 +2,8 @@ import { searchManga } from "@/lib/mangadex";
 import MangaRow from "@/components/MangaRow";
 import CTASection from "@/components/CTASection";
 import HeroBanner from "@/components/HeroBanner";
+import TypeFilterRow from "@/components/TypeFilterRow";
+import HotSeriesSection from "@/components/HotSeriesSection";
 
 export const dynamic = "force-dynamic";
 
@@ -27,13 +29,15 @@ export default async function HomePage() {
         seeMoreHref="/explore?sort=popular"
       />
 
-      <MangaRow
-        title="Most Bookmarked"
-        manga={popular.data}
-        seeMoreHref="/explore?sort=popular"
+      <TypeFilterRow
+        title="Recently Updated"
+        manga={recentlyUpdated.data}
+        seeMoreHref="/explore?sort=updated"
       />
 
       <CTASection />
+
+      <HotSeriesSection />
 
       <MangaRow
         title="Hot Updates"
@@ -41,10 +45,10 @@ export default async function HomePage() {
         seeMoreHref="/explore?sort=updated"
       />
 
-      <MangaRow
-        title="Recently Updated"
-        manga={recentlyUpdated.data}
-        seeMoreHref="/explore?sort=updated"
+      <TypeFilterRow
+        title="Recently Added"
+        manga={recentlyAdded.data}
+        seeMoreHref="/explore?sort=recent"
       />
 
       <MangaRow
@@ -57,12 +61,6 @@ export default async function HomePage() {
         title="Popular"
         manga={popular.data}
         seeMoreHref="/explore?sort=popular"
-      />
-
-      <MangaRow
-        title="Recently Added"
-        manga={recentlyAdded.data}
-        seeMoreHref="/explore?sort=recent"
       />
     </div>
   );
