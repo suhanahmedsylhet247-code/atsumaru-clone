@@ -14,6 +14,7 @@
   --color-badge-manga: #3b82f6;
   --color-badge-manhwa: #10b981;
   --color-badge-manhua: #f59e0b;
+  --color-bg-overlay: rgba(0, 0, 0, 0.6);
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
@@ -43,4 +44,14 @@ a {
 ::-webkit-scrollbar-thumb {
   background: #3a3a4a;
   border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
 }

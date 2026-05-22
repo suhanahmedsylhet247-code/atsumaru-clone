@@ -1,6 +1,8 @@
-import { getMangaById, getMangaChapters } from "@/lib/mangadex";
+import { getMangaById, getMangaChapters, searchManga } from "@/lib/mangadex";
 import Link from "next/link";
 import BookmarkButton from "./BookmarkButton";
+import CommentSection from "@/components/CommentSection";
+import MangaCard from "@/components/MangaCard";
 
 export default async function MangaPage({
   params,
@@ -28,6 +30,20 @@ export default async function MangaPage({
     },
     { seen: new Set<string>(), result: [] as typeof chapters }
   ).result;
+
+  let relatedManga: Awaited<ReturnType<typeof searchManga>>["data"] = [];
+  if (manga.genres.length > 0) {
+    try {
+      const related = await searchManga({
+        limit: 10,
+        order: { relevance: "desc" },
+        contentRating: ["safe", "suggestive"],
+      });
+      relatedManga = related.data.filter((m) => m.id !== id).slice(0, 8);
+    } catch {
+      // silently fail
+    }
+  }
 
   const statusColors: Record<string, string> = {
     ongoing: "text-green-400",
@@ -100,7 +116,12 @@ export default async function MangaPage({
                 Start Reading
               </Link>
             )}
-            <BookmarkButton mangaId={id} />
+            <BookmarkButton
+              mangaId={id}
+              mangaTitle={manga.title}
+              mangaCover={manga.cover}
+              mangaType={manga.type}
+            />
           </div>
         </div>
       </div>
@@ -137,6 +158,19 @@ export default async function MangaPage({
           )}
         </div>
       </div>
+
+      <CommentSection mangaId={id} />
+
+      {relatedManga.length > 0 && (
+        <section className="mt-10">
+          <h2 className="text-lg font-semibold mb-4">You Might Also Like</h2>
+          <div className="flex gap-4 overflow-x-auto pb-2" style={{ scrollbarWidth: "none" }}>
+            {relatedManga.map((m) => (
+              <MangaCard key={m.id} id={m.id} title={m.title} cover={m.cover} type={m.type} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

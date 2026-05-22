@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -23,24 +24,24 @@ export default function RootLayout({
               <div>
                 <h3 className="font-semibold text-text-primary mb-3">Atsumaru</h3>
                 <ul className="space-y-2 text-sm text-text-secondary">
-                  <li><a href="/" className="hover:text-text-primary">Home</a></li>
-                  <li><a href="/leaderboard" className="hover:text-text-primary">Leaderboard</a></li>
-                  <li><a href="/explore" className="hover:text-text-primary">Explore</a></li>
+                  <li><Link href="/" className="hover:text-text-primary">Home</Link></li>
+                  <li><Link href="/leaderboard" className="hover:text-text-primary">Leaderboard</Link></li>
+                  <li><Link href="/explore" className="hover:text-text-primary">Explore</Link></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-text-primary mb-3">Browse</h3>
                 <ul className="space-y-2 text-sm text-text-secondary">
-                  <li><a href="/explore" className="hover:text-text-primary">Advanced search</a></li>
-                  <li><a href="/explore?sort=recent" className="hover:text-text-primary">Recently added</a></li>
-                  <li><a href="/explore?sort=popular" className="hover:text-text-primary">Popular</a></li>
+                  <li><Link href="/explore" className="hover:text-text-primary">Advanced search</Link></li>
+                  <li><Link href="/explore?sort=recent" className="hover:text-text-primary">Recently added</Link></li>
+                  <li><Link href="/explore?sort=popular" className="hover:text-text-primary">Popular</Link></li>
                 </ul>
               </div>
               <div>
                 <h3 className="font-semibold text-text-primary mb-3">Account</h3>
                 <ul className="space-y-2 text-sm text-text-secondary">
-                  <li><a href="/bookmarks" className="hover:text-text-primary">Bookmarks</a></li>
-                  <li><a href="/profile" className="hover:text-text-primary">Profile</a></li>
+                  <li><Link href="/bookmarks" className="hover:text-text-primary">Bookmarks</Link></li>
+                  <li><Link href="/profile" className="hover:text-text-primary">Profile</Link></li>
                 </ul>
               </div>
               <div>

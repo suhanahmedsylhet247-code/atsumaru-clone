@@ -39,8 +39,10 @@ export default async function ReaderPage({
       pages={pages}
       mangaId={mangaId}
       mangaTitle={manga.title}
+      mangaCover={manga.cover}
+      mangaType={manga.type}
       chapterNumber={currentChapter?.chapter || "?"}
-      totalChapters={uniqueChapters.length}
+      chapterId={chapterId}
       prevChapterId={prevChapter?.id || null}
       nextChapterId={nextChapter?.id || null}
     />

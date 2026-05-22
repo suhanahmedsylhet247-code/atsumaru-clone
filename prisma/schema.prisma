@@ -18,15 +18,20 @@ model User {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
-  bookmarks Bookmark[]
-  comments  Comment[]
-  votes     Vote[]
+  bookmarks       Bookmark[]
+  comments        Comment[]
+  votes           Vote[]
+  readingProgress ReadingProgress[]
+  readingHistory  ReadingHistory[]
 }
 
 model Bookmark {
   id        String   @id @default(cuid())
   userId    String
   mangaId   String
+  mangaTitle String  @default("")
+  mangaCover String?
+  mangaType  String  @default("")
   status    String   @default("reading")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -72,8 +77,28 @@ model ReadingProgress {
   userId        String
   mangaId       String
   lastChapterId String
+  lastChapterNum String  @default("")
   lastPage      Int      @default(0)
+  totalPages    Int      @default(0)
   updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, mangaId])
+}
+
+model ReadingHistory {
+  id            String   @id @default(cuid())
+  userId        String
+  mangaId       String
+  mangaTitle    String
+  mangaCover    String?
+  mangaType     String   @default("")
+  chapterId     String
+  chapterNum    String
+  readAt        DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, mangaId])
 }
